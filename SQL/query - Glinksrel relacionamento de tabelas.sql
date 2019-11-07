@@ -1,4 +1,4 @@
-USE DBCI;  
+USE DBUG;  
 GO  
 SELECT   distinct
    -- f.name AS foreign_key_name,  
@@ -10,8 +10,7 @@ SELECT   distinct
 FROM sys.foreign_keys AS f  
 INNER JOIN sys.foreign_key_columns AS fc   
    ON f.object_id = fc.constraint_object_id   
-where is_disabled =0
-and OBJECT_NAME(f.parent_object_id)= 'CIFSACS1'
+where  OBJECT_NAME(f.parent_object_id)= 'ugfsgal1'
 order by 1
 
 /*
