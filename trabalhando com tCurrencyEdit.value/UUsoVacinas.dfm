@@ -77,6 +77,7 @@ inherited FMovimentoUsoVacinas: TFMovimentoUsoVacinas
     Height = 309
     Align = alClient
     Color = clSilver
+    PageIndex = 1
     ParentColor = False
     TabOrder = 1
     object TPage
@@ -160,6 +161,35 @@ inherited FMovimentoUsoVacinas: TFMovimentoUsoVacinas
           Width = 70
           Height = 14
           Caption = 'Preço Unitário:'
+        end
+        object Label16: TLabel
+          Left = 205
+          Top = 2
+          Width = 37
+          Height = 14
+          Caption = 'Reduz.:'
+        end
+        object DBText5: TDBText
+          Left = 247
+          Top = 2
+          Width = 40
+          Height = 14
+          AutoSize = True
+          DataField = 'cod_lote_num'
+          DataSource = dtsIdadeEndereco
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = []
+          ParentFont = False
+        end
+        object lbl1: TLabel
+          Left = 256
+          Top = 267
+          Width = 56
+          Height = 14
+          Caption = 'Preço Total:'
         end
         object detDat_Movto: TDateEdit
           Left = 104
@@ -471,6 +501,22 @@ inherited FMovimentoUsoVacinas: TFMovimentoUsoVacinas
           AutoSize = False
           TabOrder = 14
         end
+        object edtPrecoTotal: TCurrencyEdit
+          Left = 317
+          Top = 263
+          Width = 121
+          Height = 21
+          AutoSize = False
+          Enabled = False
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clRed
+          Font.Height = -11
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentFont = False
+          ReadOnly = True
+          TabOrder = 15
+        end
       end
     end
     object TPage
@@ -481,7 +527,7 @@ inherited FMovimentoUsoVacinas: TFMovimentoUsoVacinas
         Left = 0
         Top = 0
         Width = 650
-        Height = 283
+        Height = 309
         Align = alClient
         DataSource = dtsQryConsulta
         Font.Charset = DEFAULT_CHARSET
@@ -539,6 +585,18 @@ inherited FMovimentoUsoVacinas: TFMovimentoUsoVacinas
             FieldName = 'qtd_doses'
             Title.Caption = 'Quantidade'
             Width = 70
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'preco_unit'
+            Title.Caption = 'Preço Unit.'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'preco_total'
+            Title.Caption = 'Preco Total'
             Visible = True
           end>
       end
@@ -629,6 +687,14 @@ inherited FMovimentoUsoVacinas: TFMovimentoUsoVacinas
     object QryConsultaCOD_VAC_MEDIC: TStringField
       FieldName = 'COD_VAC_MEDIC'
       Size = 10
+    end
+    object QryConsultapreco_unit: TFloatField
+      FieldName = 'preco_unit'
+      Required = True
+    end
+    object QryConsultapreco_total: TFloatField
+      FieldName = 'preco_total'
+      Required = True
     end
   end
   object QryLotes: TADQuery

@@ -79,6 +79,12 @@ type
     Label14: TLabel;
     Label15: TLabel;
     edtPreco: TCurrencyEdit;
+    Label16: TLabel;
+    DBText5: TDBText;
+    edtPrecoTotal: TCurrencyEdit;
+    lbl1: TLabel;
+    QryConsultapreco_unit: TFloatField;
+    QryConsultapreco_total: TFloatField;
     function LimpaCampos : Boolean;
     function MostraCampos: Boolean;
     function VerificaCampos: Boolean;
@@ -238,7 +244,8 @@ begin
       edtNro_Partida.Text := FieldByName('Nro_Partida').AsString;
       cedQtd_Doses.AsInteger := FieldByName('Qtd_Doses').AsInteger;
 
-      edtPreco.value := fieldByName('preco').AsFloat;
+      edtPreco.value := fieldByName('preco_unit').AsFloat;
+      edtPrecoTotal.value := fieldByName('preco_total').AsFloat;
 
       detDat_Movto.Enabled := False;
       cedCod_Lote_Num.Enabled := False;
@@ -425,7 +432,6 @@ var
 begin
   inherited;
 
-
   if not (VerificaCampos) then
     begin
       Exit;
@@ -433,9 +439,9 @@ begin
 
   vSelect := 'Insert Into avfsmva1 ';
   vCampos := 'Dat_Movto, Cod_Lote_Num, Cod_Atividade, Cod_Vac_Medic, Cod_Laboratorio, ' +
-             'Nro_Partida, Dat_Validade, Dat_Prevista, Qtd_Doses, Qtd_Aves,Dat_fabricacao,COD_METODO, preco ';
+             'Nro_Partida, Dat_Validade, Dat_Prevista, Qtd_Doses, Qtd_Aves,Dat_fabricacao,COD_METODO, preco_unit, preco_total ';
   vValues := ':Dat_Movto, :Cod_Lote_Num, :Cod_Atividade, :Cod_Vac_Medic, :Cod_Laboratorio, ' +
-             ':Nro_Partida, :Dat_Validade, :Dat_Prevista, :Qtd_Doses, :Qtd_Aves,:Dat_fabricacao,:COD_METODO, :preco ';
+             ':Nro_Partida, :Dat_Validade, :Dat_Prevista, :Qtd_Doses, :Qtd_Aves,:Dat_fabricacao,:COD_METODO, :preco_unit, :preco_total ';
   try
     begin
       if not(FMenu.dbsManejo.InTransaction) then FMenu.dbsManejo.StartTransaction;
@@ -454,7 +460,8 @@ begin
           ParamByName('Dat_fabricacao').AsDateTime := edtFab.Date;
           ParamByName('Dat_Prevista').AsDateTime := vDataProgramada;
           ParamByName('Qtd_Doses').AsInteger := cedQtd_Doses.AsInteger;
-          ParamByName('preco').asFloat := edtPreco.value;
+          ParamByName('preco_unit').asFloat := edtPreco.value;
+          ParamByName('preco_total').asFloat := cedQtd_Doses.AsInteger * edtPreco.value;
           ParamByName('Qtd_Aves').AsInteger := 0;
           ExecSQL;
         end;
@@ -491,7 +498,7 @@ begin
 
   vSelect := 'Update avfsmva1 ';
   vCampos := 'Cod_Vac_Medic = :Cod_Vac_Medic, Cod_Laboratorio = :Cod_Laboratorio, Nro_Partida = :Nro_Partida, ' +
-             'Dat_Validade = :Dat_Validade, Qtd_Doses = :Qtd_Doses, Qtd_Aves = :Qtd_Aves,Dat_fabricacao=:Dat_fabricacao,Cod_Metodo=:Cod_Metodo ';
+             'Dat_Validade = :Dat_Validade, Qtd_Doses = :Qtd_Doses, preco_unit = :total_unit, preco_total = :preco_total,  Qtd_Aves = :Qtd_Aves,Dat_fabricacao=:Dat_fabricacao,Cod_Metodo=:Cod_Metodo ';
   vWhere  := 'Current of Uso_de_Vacinas ';
   try
     begin
@@ -505,7 +512,8 @@ begin
           ParamByName('Dat_Validade').AsDateTime := detDat_Validade.Date;
           ParamByName('Dat_fabricacao').AsDateTime := edtFab.Date;
           ParamByName('Qtd_Doses').AsInteger := cedQtd_Doses.AsInteger;
-          ParamByName('preco').AsFloat := edtPreco.value;
+          ParamByName('preco_unit').AsFloat := edtPreco.value;
+          ParamByName('preco_total').asFloat := cedQtd_Doses.AsInteger * edtPreco.value;
           ParamByName('Cod_Metodo').AsInteger := cedCod_Metodo.AsInteger;
           ParamByName('Qtd_Aves').AsInteger := 0;
           ExecSQL;
@@ -644,7 +652,7 @@ begin
       Close;
       SQL.Clear;
       {Parte fixa da query}
-      SQL.Add('Select Cod_Lote_Num, Dat_Movto, Cod_Atividade, Cod_Vac_Medic, Cod_Laboratorio, Cod_Registro, Nro_Partida, Dat_Validade, Dat_Prevista, Qtd_Doses, Qtd_Aves From avfsmva1 where cod_lote_num = :cod_lote_num ');
+      SQL.Add('Select Cod_Lote_Num, Dat_Movto, Cod_Atividade, Cod_Vac_Medic, Cod_Laboratorio, Cod_Registro, Nro_Partida, Dat_Validade, Dat_Prevista, Qtd_Doses, Qtd_Aves, preco_unit, preco_total From avfsmva1 where cod_lote_num = :cod_lote_num ');
       {Parte variável da query}
 {      vWhere := '';
       if detDat_Movto.Date <> 0 then
@@ -971,5 +979,6 @@ begin
   cedCod_Metodo.asinteger := QryVacinascod_metodo.asinteger;
   dlcMetodo.keyvalue     := QryVacinascod_metodo.asinteger;
 end;
+
 
 end.
