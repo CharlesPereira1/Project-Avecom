@@ -1,0 +1,13 @@
+
+/*ALTERAR INPUT CURRENTEDIT PARA TEDIT*/
+
+Se codigo for String, tirar o currentEdit e colocar um tEdit;
+Aplicar os eventos onclick e o exit
+tirar o fild do campo e adicionar novamente no Query
+fitrar e adicionar o field no TRxMemory com o type correto
+Se a Query tiver parametro, mudar o tipo
+
+
+
+
+
