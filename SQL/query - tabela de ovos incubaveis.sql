@@ -18,3 +18,5 @@ WHERE
 GROUP BY dat_movto
 
 select qtd_ovos_aprov, qtd_ovos_cama, * from avfsdpo1 where cod_lote_num = 116 and DAT_MOVTO = '2019-01-13 00:00:00.000'
+
+/*Lotes de*/
