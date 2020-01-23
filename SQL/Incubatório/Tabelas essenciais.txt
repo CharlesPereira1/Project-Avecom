@@ -1,0 +1,20 @@
+Driver ODBC para Excel parametro insuficientes. eram esperados 1
+
+essas fiz relação com o codlotenum e a dat_post
+CIFSREC1
+CIFSCLA1
+CIFSSAO1
+CIFSINC1
+CIFSTRE1
+CIFSSOI1
+
+essas não tinham nada
+CIFSAOC1
+CIFSTRO1
+CIFSMRO1
+CIFSMOR1
+
+esses ainda estou mechendo pois pega pela dat_incub e mais alguns outros itens
+CIFSECM1
+CIFSECR1
+CIFSPIR1
